@@ -15,9 +15,7 @@ img {
     height: auto;
 }
 
-h3 {
-    position: fixed;
-}
+
 
 button {
     background-color: #9a0d87;
@@ -43,13 +41,17 @@ button {
 .song {
     text-align: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
 }
 
 .text-div {
     height: 10vh;
     width: 30vw;
     justify-self: center;
+}
+
+#game-over {
+    display: none;
 }
 
 #left-song {
