@@ -44,6 +44,31 @@ button {
     text-align: center;
     align-items: center;
     position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup {
+    display: none;
+    width: 40vw;
+    height: 35vh;
+    background-color: #222222;
+    position: fixed;
+    top: 20%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    margin-left: -20vw;
+    margin-top: -17.5vh;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 }
 
 #game-over {
@@ -58,6 +83,23 @@ button {
     right: 15vw;
 }
 
+#restart-arrow {
+    position: fixed;
+    top: 2%;
+    right: 0%;
+    color: white;
+}
+
+#undo-arrow {
+    position: fixed;
+    top: 2%;
+    left: 0%;
+    color: white;
+}
+
+#crown {
+    width: 10vw;
+}
 /* #left-song {
 }
 
