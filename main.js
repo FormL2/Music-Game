@@ -67,12 +67,12 @@ function update() {
 
 // Do not want to make a function that takes arguments of the ID and number to set images and stuff to but I don't wanna RN
 
-document.getElementById("right-img").ondragstart = document.getElementById("left-img").ondragstart = () => {
+document.getElementById("right-img").ondragstart = document.getElementById("left-img").ondragstart = document.getElementById("win-img").ondragstart = () => {
   return false;
 };
 
 var left_playing = false
-document.getElementById("left-img").onclick = () => {
+document.getElementById("left-img").onclick = document.getElementById("win-img").onclick = () => {
   if (!left_playing) {
     document.getElementById("right-audio").pause()
     document.getElementById("right-audio").currentTime = 0;
