@@ -1,62 +1,71 @@
 if (window.localStorage.getItem("unusedSongs") == null) {
   var numbers = [0,1,2];
   window.localStorage.setItem("unusedSongs",numbers);
-} else if ((window.localStorage.getItem("unusedSongs") == "")) {
+} else if (window.localStorage.getItem("unusedSongs") == "") {
   var numbers = [];
 } else {
   var numbers = window.localStorage.getItem("unusedSongs").split(",");
 };
 
-if (window.localStorage.getItem("currentLeft") == null) {
+if (window.localStorage.getItem("complete") !== null) {
+  update()
+}
+
+function updateProperties(ID, number, indexOfArray) {
+  if (indexOfArray) {
+    document.getElementById(ID+"-img").src = images[numbers[number]];
+    document.getElementById(ID+"-artist").innerHTML = artists[numbers[number]];
+    document.getElementById(ID+"-title").innerHTML = titles[numbers[number]];
+    document.getElementById(ID+"-audio").src = audios[numbers[number]];
+  } else {
+    document.getElementById(ID+"-img").src = images[number];
+    document.getElementById(ID+"-artist").innerHTML = artists[number];
+    document.getElementById(ID+"-title").innerHTML = titles[number];
+    document.getElementById(ID+"-audio").src = audios[number];
+  };
+};
+
+var currentLeft = window.localStorage.getItem("currentLeft")
+if (currentLeft == null) {
   var number = Math.floor(Math.random()*numbers.length);
-  document.getElementById("left-img").src = images[numbers[number]];
-  document.getElementById("left-artist").innerHTML = artists[numbers[number]];
-  document.getElementById("left-title").innerHTML = titles[numbers[number]];
-  document.getElementById("left-audio").src = audios[numbers[number]];
+  updateProperties("left",number,true)
   window.localStorage.setItem("currentLeft",numbers[number]);
   numbers.splice(number,1);
   window.localStorage.setItem("unusedSongs",numbers)
 } else {
-  document.getElementById("left-img").src = images[window.localStorage.getItem("currentLeft")];
-  document.getElementById("left-artist").innerHTML = artists[window.localStorage.getItem("currentLeft")];
-  document.getElementById("left-title").innerHTML = titles[window.localStorage.getItem("currentLeft")];
-  document.getElementById("left-audio").src = audios[window.localStorage.getItem("currentLeft")];
+  updateProperties("left",currentLeft,false)
 };
 
 if (window.localStorage.getItem("currentRight") == null) {
   var number = Math.floor(Math.random()*numbers.length);
-  document.getElementById("right-img").src = images[numbers[number]];
-  document.getElementById("right-artist").innerHTML = artists[numbers[number]];
-  document.getElementById("right-title").innerHTML = titles[numbers[number]];
-  document.getElementById("right-audio").src = audios[numbers[number]];
+  updateProperties("right",number,true)
   window.localStorage.setItem("currentRight",numbers[number]);
   numbers.splice(number,1);
   window.localStorage.setItem("unusedSongs",numbers)
 } else {
-  document.getElementById("right-img").src = images[window.localStorage.getItem("currentRight")];
-  document.getElementById("right-artist").innerHTML = artists[window.localStorage.getItem("currentRight")];
-  document.getElementById("right-title").innerHTML = titles[window.localStorage.getItem("currentRight")];
-  document.getElementById("right-audio").src = audios[window.localStorage.getItem("currentRight")];
+  var currentRight = window.localStorage.getItem("currentRight")
+  updateProperties("right",currentRight,false)
 };
 
 function update() {
   if (numbers.length == 0) {
-    console.log("end")
-    document.getElementById("game").style = "display: none";
-    document.getElementById("game-over").style = "display: inherit";
     document.getElementById("left-audio").pause();
     document.getElementById("right-audio").pause();
+    var winner = window.localStorage.getItem("currentLeft")
+    window.localStorage.setItem("complete", true)
+    updateProperties("win",winner,false)
+    document.getElementById("game").style = "display: none";
+    document.getElementById("game-over").style = "display: flex";
   } else {
-  var number = Math.floor(Math.random()*numbers.length);
-  document.getElementById("right-img").src = images[numbers[number]];
-  document.getElementById("right-artist").innerHTML = artists[numbers[number]];
-  document.getElementById("right-title").innerHTML = titles[numbers[number]];
-  document.getElementById("right-audio").src = audios[numbers[number]];
-  window.localStorage.setItem("currentRight",numbers[number]);
-  numbers.splice(number,1);
-  window.localStorage.setItem("unusedSongs",numbers);
+    var number = Math.floor(Math.random()*numbers.length);
+    updateProperties("right",number,true)
+    window.localStorage.setItem("currentRight",numbers[number]);
+    numbers.splice(number,1);
+    window.localStorage.setItem("unusedSongs",numbers);
   };
 };
+
+// Do not want to make a function that takes arguments of the ID and number to set images and stuff to but I don't wanna RN
 
 document.getElementById("right-img").ondragstart = document.getElementById("left-img").ondragstart = () => {
   return false;
@@ -73,7 +82,6 @@ document.getElementById("left-img").onclick = () => {
     document.getElementById("left-audio").pause();
     document.getElementById("left-audio").currentTime = 0;
   };
-  // left_playing = !left_playing;
 };
 
 document.getElementById("left-audio").onpause = () => {

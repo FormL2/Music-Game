@@ -15,7 +15,9 @@ img {
     height: auto;
 }
 
-
+h1 {
+    width: 25vw;
+}
 
 button {
     background-color: #9a0d87;
@@ -32,8 +34,8 @@ button {
 
 .container {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     text-align: center;
     min-height: 100vh;
 }
@@ -42,12 +44,6 @@ button {
     text-align: center;
     align-items: center;
     position: fixed;
-}
-
-.text-div {
-    height: 10vh;
-    width: 30vw;
-    justify-self: center;
 }
 
 #game-over {
