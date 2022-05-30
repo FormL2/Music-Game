@@ -9,7 +9,10 @@ function script() {
   document.getElementById("win-audio").currentTime = 0;
   
   if (window.localStorage.getItem("unusedSongs") == null) {
-    var numbers = [0,1,2];
+    var numbers = []
+    for (let i = 0; i < titles.length; i++) {
+      numbers[numbers.length] = i;
+    };
     window.localStorage.setItem("unusedSongs",numbers);
   } else if (window.localStorage.getItem("unusedSongs") == "") {
     var numbers = [];
@@ -30,12 +33,12 @@ function script() {
 
   function updateProperties(ID, number, indexOfArray) {
     if (indexOfArray) {
-      document.getElementById(ID+"-img").src = images[numbers[number]];
+      document.getElementById(ID+"-img").src = "Images/"+images[numbers[number]];
       document.getElementById(ID+"-artist").innerHTML = artists[numbers[number]];
       document.getElementById(ID+"-title").innerHTML = titles[numbers[number]];
       document.getElementById(ID+"-audio").src = "Songs/"+audios[numbers[number]];
     } else {
-      document.getElementById(ID+"-img").src = images[number];
+      document.getElementById(ID+"-img").src = "Images/"+images[number];
       document.getElementById(ID+"-artist").innerHTML = artists[number];
       document.getElementById(ID+"-title").innerHTML = titles[number];
       if (ID == "win") {
@@ -92,7 +95,7 @@ function script() {
     };
   };
 
-  // Do not want to make a function that takes arguments of the ID and number to set images and stuff to but I don't wanna RN
+  // Turns out I had more willpower than I thought but not the ability to remember to delete my comment (or write English)
 
   document.getElementById("right-img").ondragstart = document.getElementById("left-img").ondragstart = document.getElementById("win-img").ondragstart = document.getElementById("crown").ondragstart = () => {
     return false;
