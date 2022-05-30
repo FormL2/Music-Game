@@ -1,6 +1,12 @@
 function script() {
   document.getElementById("game").style = "display: flex";
   document.getElementById("game-over").style = "display: flex";
+  document.getElementById("left-img").style = "outline-style: none;";
+  document.getElementById("right-img").style = "outline-style: none;";
+  document.getElementById("win-img").style = "outline-style: none;";
+  document.getElementById("right-img").style = "outline-style: none;";
+  document.getElementById("win-audio").pause();
+  document.getElementById("win-audio").currentTime = 0;
   
   if (window.localStorage.getItem("unusedSongs") == null) {
     var numbers = [0,1,2];
@@ -27,12 +33,16 @@ function script() {
       document.getElementById(ID+"-img").src = images[numbers[number]];
       document.getElementById(ID+"-artist").innerHTML = artists[numbers[number]];
       document.getElementById(ID+"-title").innerHTML = titles[numbers[number]];
-      document.getElementById(ID+"-audio").src = audios[numbers[number]];
+      document.getElementById(ID+"-audio").src = "Songs/"+audios[numbers[number]];
     } else {
       document.getElementById(ID+"-img").src = images[number];
       document.getElementById(ID+"-artist").innerHTML = artists[number];
       document.getElementById(ID+"-title").innerHTML = titles[number];
-      document.getElementById(ID+"-audio").src = audios[number];
+      if (ID == "win") {
+        document.getElementById(ID+"-audio").src = ("Songs/"+audios[number]).split(".")[0]+"-Full."+("Songs/"+audios[number]).split(".")[1];
+      } else {
+        document.getElementById(ID+"-audio").src = "Songs/"+audios[number];
+      }
     };
   };
 
@@ -49,27 +59,33 @@ function script() {
 
   if (window.localStorage.getItem("currentRight") == null) {
     var number = Math.floor(Math.random()*numbers.length);
-    updateProperties("right",number,true)
+    updateProperties("right",number,true);
     window.localStorage.setItem("currentRight",numbers[number]);
     numbers.splice(number,1);
-    window.localStorage.setItem("unusedSongs",numbers)
+    window.localStorage.setItem("unusedSongs",numbers);
   } else {
-    var currentRight = window.localStorage.getItem("currentRight")
-    updateProperties("right",currentRight,false)
+    var currentRight = window.localStorage.getItem("currentRight");
+    updateProperties("right",currentRight,false);
   };
 
   function update() {
+    document.getElementById("left-audio").pause();
+    document.getElementById("left-audio").currentTime = 0;
+    document.getElementById("right-audio").pause();
+    document.getElementById("right-audio").currentTime = 0;
+    document.getElementById("left-img").style = "outline-style: none;";
+    document.getElementById("right-img").style = "outline-style: none;";
     if (numbers.length == 0) {
       document.getElementById("left-audio").pause();
       document.getElementById("right-audio").pause();
-      var winner = window.localStorage.getItem("currentLeft")
-      window.localStorage.setItem("complete",true)
-      updateProperties("win",winner,false)
+      var winner = window.localStorage.getItem("currentLeft");
+      window.localStorage.setItem("complete",true);
+      updateProperties("win",winner,false);
       document.getElementById("game").style = "display: none";
       document.getElementById("game-over").style = "display: flex";
     } else {
       var number = Math.floor(Math.random()*numbers.length);
-      updateProperties("right",number,true)
+      updateProperties("right",number,true);
       window.localStorage.setItem("currentRight",numbers[number]);
       numbers.splice(number,1);
       window.localStorage.setItem("unusedSongs",numbers);
@@ -85,18 +101,27 @@ function script() {
   var left_playing = false
   document.getElementById("left-img").onclick = document.getElementById("win-img").onclick = () => {
     if (!left_playing) {
-      document.getElementById("right-audio").pause()
+      document.getElementById("right-audio").pause();
       document.getElementById("right-audio").currentTime = 0;
-      document.getElementById("left-audio").play();
-      left_playing = true
+      if (window.localStorage.getItem("complete") == null) {
+        document.getElementById("left-audio").play();
+        document.getElementById("left-img").style = "outline-style: double;";
+      } else {
+        document.getElementById("win-audio").play();
+        document.getElementById("win-img").style = "outline-style: double;";
+      };
+    left_playing = true
     } else {
       document.getElementById("left-audio").pause();
       document.getElementById("left-audio").currentTime = 0;
+      document.getElementById("win-audio").pause();
     };
   };
 
-  document.getElementById("left-audio").onpause = () => {
+  document.getElementById("left-audio").onpause = document.getElementById("win-audio").onpause = () => {
     left_playing = false;
+    document.getElementById("left-img").style = "outline-style: none;";
+    document.getElementById("win-img").style = "outline-style: none;";
   };
 
   var right_playing = false
@@ -105,6 +130,7 @@ function script() {
       document.getElementById("left-audio").pause();
       document.getElementById("left-audio").currentTime = 0;
       document.getElementById("right-audio").play();
+      document.getElementById("right-img").style = "outline-style: double;";
       right_playing = true
     } else {
       document.getElementById("right-audio").pause();
@@ -114,6 +140,7 @@ function script() {
 
   document.getElementById("right-audio").onpause = () => {
     right_playing = false;
+    document.getElementById("right-img").style = "outline-style: none;";
   };
 
   document.getElementById("left-vote").onclick = () => {

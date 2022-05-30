@@ -13,10 +13,11 @@ body {
 img {
     width: 20vw;
     height: auto;
+    outline: white none .2em;
 }
 
 h1 {
-    width: 25vw;
+    width: 30vw;
 }
 
 button {
@@ -86,7 +87,7 @@ button {
 #restart-arrow {
     position: fixed;
     top: 2%;
-    right: 0%;
+    right: 1%;
     color: white;
 }
 

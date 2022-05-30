@@ -17,7 +17,7 @@ const images = [
 ]
 
 const audios = [
-    "bonk.mp3",
-    "whoosh.mp3",
-    "smack.mp3",
+    "Bones.mp3",
+    "Broken-Strings.mp3",
+    "The-Wilhelm-Scream.mp3",
 ]
