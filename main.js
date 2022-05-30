@@ -95,8 +95,6 @@ function script() {
     };
   };
 
-  // Turns out I had more willpower than I thought but not the ability to remember to delete my comment (or write English)
-
   document.getElementById("right-img").ondragstart = document.getElementById("left-img").ondragstart = document.getElementById("win-img").ondragstart = document.getElementById("crown").ondragstart = () => {
     return false;
   };
