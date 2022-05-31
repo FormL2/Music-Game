@@ -63,27 +63,30 @@ function script() {
     };
   };
 
-  var currentLeft = window.localStorage.getItem("currentLeft")
+  currentLeft = window.localStorage.getItem("currentLeft");
   if (currentLeft == null) {
     var number = numbers.length-1 // --Used only for songs order being generated initially.
     // var number = Math.floor(Math.random()*numbers.length); // --Song will be chosen randomly upon vote being pressed. This means undoing and reselecting could result in a different song eing selected.
     updateProperties("left",number,true)
-    window.localStorage.setItem("currentLeft",numbers[number]);
+    currentLeft = numbers[number];
+    window.localStorage.setItem("currentLeft",currentLeft);
     numbers.splice(number,1);
     window.localStorage.setItem("unusedSongs",numbers)
   } else {
     updateProperties("left",currentLeft,false)
   };
 
-  if (window.localStorage.getItem("currentRight") == null) {
+  currentRight = window.localStorage.getItem("currentRight");
+  if (currentRight == null) {
     var number = numbers.length-1 // --Used only for songs order being generated initially.
     // var number = Math.floor(Math.random()*numbers.length); // --Song will be chosen randomly upon vote being pressed. This means undoing and reselecting could result in a different song eing selected.
     updateProperties("right",number,true);
-    window.localStorage.setItem("currentRight",numbers[number]);
+    currentRight = numbers[number];
+    window.localStorage.setItem("currentRight",currentRight);
     numbers.splice(number,1);
     window.localStorage.setItem("unusedSongs",numbers);
   } else {
-    var currentRight = window.localStorage.getItem("currentRight");
+    currentRight = window.localStorage.getItem("currentRight");
     updateProperties("right",currentRight,false);
   };
 
@@ -106,7 +109,8 @@ function script() {
       var number = numbers.length-1 // --Used only for songs order being generated initially.
       // var number = Math.floor(Math.random()*numbers.length); // --Song will be chosen randomly upon vote being pressed. This means undoing and reselecting could result in a different song eing selected.
       updateProperties("right",number,true);
-      window.localStorage.setItem("currentRight",numbers[number]);
+      currentRight = numbers[number];
+      window.localStorage.setItem("currentRight",currentRight);
       numbers.splice(number,1);
       window.localStorage.setItem("unusedSongs",numbers);
     };
@@ -163,7 +167,7 @@ function script() {
 
   document.getElementById("left-vote").onclick = () => {
     votes[votes.length] = "l";
-    votes[votes.length] = window.localStorage.getItem("currentRight");
+    votes[votes.length] = currentRight;
     window.localStorage.setItem("votes",votes);
     left_playing = right_playing = false;
     update();
@@ -172,13 +176,14 @@ function script() {
   document.getElementById("right-vote").onclick = () => {
     left_playing = right_playing = false;
     votes[votes.length] = "r";
-    votes[votes.length] = window.localStorage.getItem("currentLeft");
+    votes[votes.length] = currentLeft;
     window.localStorage.setItem("votes",votes);
     document.getElementById("left-img").src = document.getElementById("right-img").src;
     document.getElementById("left-artist").innerHTML = document.getElementById("right-artist").innerHTML;
     document.getElementById("left-title").innerHTML = document.getElementById("right-title").innerHTML;
     document.getElementById("left-audio").src = document.getElementById("right-audio").src;
-    window.localStorage.setItem("currentLeft",window.localStorage.getItem("currentRight"));
+    currentLeft = currentRight
+    window.localStorage.setItem("currentLeft",currentLeft);
     update()
   };
 
@@ -204,21 +209,25 @@ function script() {
         window.localStorage.removeItem("complete");
         script();
       } else {
-        numbers[numbers.length] = window.localStorage.getItem("currentRight");
+        numbers[numbers.length] = currentRight;
         // numbers.sort(sortArray); // --Used only for numerical order array
         window.localStorage.setItem("unusedSongs",numbers)
-        window.localStorage.setItem("currentRight",votes[votes.length-1]);
+        currentRight = votes[votes.length-1]
+        window.localStorage.setItem("currentRight",currentRight);
       };
     } else {
       if (window.localStorage.getItem("complete") == "true") {
         window.localStorage.removeItem("complete");
-        window.localStorage.setItem("currentLeft",votes[votes.length-1])
+        currentLeft = votes[votes.length-1]
+        window.localStorage.setItem("currentLeft",currentLeft)
       } else {
-        numbers[numbers.length] = window.localStorage.getItem("currentRight")
+        numbers[numbers.length] = currentRight
         // numbers.sort(sortArray); // --Used only for numerical order array
         window.localStorage.setItem("unusedSongs",numbers)
-        window.localStorage.setItem("currentRight",window.localStorage.getItem("currentLeft"))
-        window.localStorage.setItem("currentLeft",votes[votes.length-1])
+        currentRight = currentLeft
+        window.localStorage.setItem("currentRight",currentRight)
+        currentLeft = votes[votes.length-1]
+        window.localStorage.setItem("currentLeft",currentLeft)
       };
     };
     votes.splice(votes.length-2,2);
