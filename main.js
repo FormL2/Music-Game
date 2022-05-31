@@ -9,10 +9,11 @@ function script() {
   document.getElementById("win-audio").currentTime = 0;
   
   if (window.localStorage.getItem("unusedSongs") == null) {
-    var numbers = []
-    for (let i = 0; i < titles.length; i++) {
-      numbers[numbers.length] = i;
-    };
+    // var numbers = []; // --Used only for songs order being generated initially.
+    // for (let i = 0; i < titles.length; i++) {
+    //   numbers[numbers.length] = i;
+    // };
+    generateArray() // --Queue of songs will be generated at the start, meaning when undoing and votinmg again, the order of songs will not change.
     window.localStorage.setItem("unusedSongs",numbers);
   } else if (window.localStorage.getItem("unusedSongs") == "") {
     var numbers = [];
@@ -29,6 +30,19 @@ function script() {
     votes = [];
   } else {
     var votes = votes.split(",");
+  };
+
+  function generateArray() { // --Queue of songs will be generated at the start, meaning when undoing and votinmg again, the order of songs will not change.
+    let unused = [];
+    for (let i = 0; i < titles.length; i++) {
+      unused[unused.length] = i;
+    };
+    numbers = [];
+    while (unused.length != 0) { // (If this breaks, just use <for (let i = 0; i < titles.length; i++) {>; I just wanted to use a while loop. Lots of for loops in here. -- Also while unused != [] does NOT work.)
+      let index = Math.floor(Math.random()*unused.length);
+      numbers[numbers.length] = unused[index];
+      unused.splice(index,1);
+    };
   };
 
   function updateProperties(ID, number, indexOfArray) {
@@ -51,7 +65,8 @@ function script() {
 
   var currentLeft = window.localStorage.getItem("currentLeft")
   if (currentLeft == null) {
-    var number = Math.floor(Math.random()*numbers.length);
+    var number = numbers.length-1 // --Used only for songs order being generated initially.
+    // var number = Math.floor(Math.random()*numbers.length); // --Song will be chosen randomly upon vote being pressed. This means undoing and reselecting could result in a different song eing selected.
     updateProperties("left",number,true)
     window.localStorage.setItem("currentLeft",numbers[number]);
     numbers.splice(number,1);
@@ -61,7 +76,8 @@ function script() {
   };
 
   if (window.localStorage.getItem("currentRight") == null) {
-    var number = Math.floor(Math.random()*numbers.length);
+    var number = numbers.length-1 // --Used only for songs order being generated initially.
+    // var number = Math.floor(Math.random()*numbers.length); // --Song will be chosen randomly upon vote being pressed. This means undoing and reselecting could result in a different song eing selected.
     updateProperties("right",number,true);
     window.localStorage.setItem("currentRight",numbers[number]);
     numbers.splice(number,1);
@@ -87,7 +103,8 @@ function script() {
       document.getElementById("game").style = "display: none";
       document.getElementById("game-over").style = "display: flex";
     } else {
-      var number = Math.floor(Math.random()*numbers.length);
+      var number = numbers.length-1 // --Used only for songs order being generated initially.
+      // var number = Math.floor(Math.random()*numbers.length); // --Song will be chosen randomly upon vote being pressed. This means undoing and reselecting could result in a different song eing selected.
       updateProperties("right",number,true);
       window.localStorage.setItem("currentRight",numbers[number]);
       numbers.splice(number,1);
@@ -188,7 +205,7 @@ function script() {
         script();
       } else {
         numbers[numbers.length] = window.localStorage.getItem("currentRight");
-        numbers.sort(sortArray);
+        // numbers.sort(sortArray); // --Used only for numerical order array
         window.localStorage.setItem("unusedSongs",numbers)
         window.localStorage.setItem("currentRight",votes[votes.length-1]);
       };
@@ -198,7 +215,7 @@ function script() {
         window.localStorage.setItem("currentLeft",votes[votes.length-1])
       } else {
         numbers[numbers.length] = window.localStorage.getItem("currentRight")
-        numbers.sort(sortArray);
+        // numbers.sort(sortArray); // --Used only for numerical order array
         window.localStorage.setItem("unusedSongs",numbers)
         window.localStorage.setItem("currentRight",window.localStorage.getItem("currentLeft"))
         window.localStorage.setItem("currentLeft",votes[votes.length-1])
@@ -215,17 +232,20 @@ function script() {
   };
 
   document.getElementById("undo-arrow").onclick = () => {
-    if (localStorage.getItem("votes") == "") {
+    let votes = localStorage.getItem("votes")
+    if (votes == null) {
       alert("You haven't entered anything to undo yet!");
+    } else if (votes == "") {
+      alert("You have reached the end of the undo history!");
     } else {
     document.getElementById("undo-popup").style = "display: flex;";
     document.getElementById("restart-popup").style = "display: none;";
     };
   };
 
-  function sortArray(a, b) {
-    return a > b ? 1 : b > a ? -1 : 0;
-  };
+  // function sortArray(a, b) { // --Used only for song being chosen at random upon vote selection.
+  //   return a > b ? 1 : b > a ? -1 : 0;
+  // };
 
 };
 
