@@ -63,7 +63,7 @@ function script() {
     };
   };
 
-  currentLeft = window.localStorage.getItem("currentLeft");
+  var currentLeft = window.localStorage.getItem("currentLeft");
   if (currentLeft == null) {
     var number = numbers.length-1 // --Used only for songs order being generated initially.
     // var number = Math.floor(Math.random()*numbers.length); // --Song will be chosen randomly upon vote being pressed. This means undoing and reselecting could result in a different song eing selected.
@@ -76,7 +76,7 @@ function script() {
     updateProperties("left",currentLeft,false)
   };
 
-  currentRight = window.localStorage.getItem("currentRight");
+  var currentRight = window.localStorage.getItem("currentRight");
   if (currentRight == null) {
     var number = numbers.length-1 // --Used only for songs order being generated initially.
     // var number = Math.floor(Math.random()*numbers.length); // --Song will be chosen randomly upon vote being pressed. This means undoing and reselecting could result in a different song eing selected.
