@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="entries.js" defer></script>
+  <script src="main.js" defer></script>
+
+  <title>Form Game</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;1000&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    
+
+    <div class="container" id="game">
+        <div class="song" id="left-song">
+            <img id="left-img" src="">
+            <audio id="left-audio" src=""></audio>
+            <h1 id="left-artist"></h1>
+            <h3 id="left-title"></h3>
+            <button id="left-vote">Vote!</button>
+        </div>
+        <div class="song" id="right-song">
+            <img id="right-img" src="">
+            <audio id="right-audio" src=""></audio>
+            <h1 id="right-artist"></h1>
+            <h3 id="right-title"></h3>
+            <button id="right-vote">Vote!</button>
+        </div>
+    </div>
+
+    <div class="container" id="game-over">
+        <div class="song" id="win-song">
+            <img id="crown" src="crown.png">
+            <img id="win-img" src="">
+            <audio id="win-audio" src=""></audio>
+            <h1 id="win-artist"></h1>
+            <h3 id="win-title"></h3>
+        </div>
+    </div>
+
+    <div>
+        <svg width="10%" height="10%" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16" id="restart-arrow">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+        </svg>
+    </div>
+    
+    <div>
+        <svg width="10%" height="10%" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16" id="undo-arrow">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+    </div>
+
+    <div class="popup" id="restart-popup">
+        <h2>ARE YOU SURE?</h2>
+        <p>You are about to restart the game!</p>
+        <p>This cannot be undone!!</p>
+        <span style="height: 5vh"></span>
+        <div class="button-container">
+            <button id="restart-yes">YES</button>
+            <span style="width: 10vw"></span>
+            <button id="restart-no">NO</button>
+        </div>
+    </div>
+
+    <div class="popup" id="undo-popup">
+        <h2>ARE YOU SURE?</h2>
+        <p>You are about to undo your last choice!</p>
+        <p>This cannot be undone!!</p>
+        <span style="height: 5vh"></span>
+        <div class="button-container">
+            <button id="undo-yes">YES</button>
+            <span style="width: 10vw"></span>
+            <button id="undo-no">NO</button>
+        </div>
+    </div>
+
+
+
+</body>
