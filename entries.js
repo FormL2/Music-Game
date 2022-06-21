@@ -10,6 +10,12 @@ const titles = [
     "California Gurls (feat. Snoop Dogg)",
     "Locomotive Breath",
     "Seen It All",
+    "Touch The Sky (feat. Lupe Fiasco)",
+    "Sensory Division",
+    "Nuthin' but a G'thang",
+    "Replay",
+    "Look Alive (feat. Drake)",
+    "The Pretender",
 ];
 
 const artists = [
@@ -24,6 +30,12 @@ const artists = [
     "Katy Perry",
     "Jethro Tull",
     "Jake Bugg",
+    "Kanye West (Ye)",
+    "Dimension",
+    "Snoop Doggy Dogg & Dr.Dre",
+    "Iyaz",
+    "BlocBoy JB",
+    "Foo Fighters",
 ];
 
 const images = [
@@ -38,6 +50,12 @@ const images = [
     "California-Gurls.jpg",
     "Locomotive-Breath.jpg",
     "Seen-It-All.jpg",
+    "Touch-The-Sky.jpg",
+    "Sensory-Division.jpg",
+    "Nuthin'-but-a-G'thang.jpg",
+    "Replay.webp",
+    "Look-Alive.jpg",
+    "The-Pretender.jpg",
 ];
 
 const audios = [
@@ -52,4 +70,10 @@ const audios = [
     "California-Gurls.mp3",
     "Locomotive-Breath.mp3",
     "Seen-It-All.mp3",
+    "Touch-The-Sky.mp3",
+    "Sensory-Division.mp3",
+    "Nuthin'-but-a-G'thang.mp3",
+    "Replay.mp3",
+    "Look-Alive.mp3",
+    "The-Pretender.mp3",
 ];
